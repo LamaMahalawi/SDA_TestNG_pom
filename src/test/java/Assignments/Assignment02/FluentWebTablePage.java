@@ -8,7 +8,7 @@ import java.util.List;
 public class FluentWebTablePage {
     private WebDriver driver;
 
-    // Locators
+
     private By nameInput = By.id("nameInput");
     private By ageInput = By.id("ageInput");
     private By countrySelect = By.xpath("//*[@id=\"countrySelect\"]");
@@ -52,8 +52,8 @@ public class FluentWebTablePage {
         return this;
     }
 
-    // Validate last row
-    public FluentWebTablePage validateLastRow(String name, String age, String country) {
+    // Validate
+    public FluentWebTablePage validateRow(String name, String age, String country) {
         List<WebElement> rows = driver.findElements(tableRows);
         int lastIndex = rows.size() - 1;
         List<WebElement> cols = rows.get(lastIndex).findElements(By.tagName("td"));

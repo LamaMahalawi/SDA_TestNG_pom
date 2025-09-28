@@ -24,6 +24,6 @@ public class FluentWebTableTest {
                 .enterAge(age)
                 .selectCountry(country)
                 .clickAddRecord()
-                .validateLastRow(name, age, country);
+                .validateRow(name, age, country);
     }
 }
