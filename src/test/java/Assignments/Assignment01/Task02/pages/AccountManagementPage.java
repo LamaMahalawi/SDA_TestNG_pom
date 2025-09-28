@@ -17,6 +17,14 @@ public class AccountManagementPage {
     @FindBy(id = "currency")
     public WebElement currencyDropdown;
 
-    @FindBy(xpath = "//button[contains(text(),'Process')]")
-    public WebElement processButton;
+    @FindBy(xpath = "//button[text()='Process']")
+    public WebElement processBtn;
+
+    public void openAccount(String customerName, String currency){
+        Select customerSelect = new Select(customerDropdown);
+        customerSelect.selectByVisibleText(customerName);
+        Select currencySelect = new Select(currencyDropdown);
+        currencySelect.selectByVisibleText(currency);
+        processBtn.click();
+    }
 }

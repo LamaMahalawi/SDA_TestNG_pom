@@ -1,8 +1,8 @@
-package Test;
+package TestNG_pom_MorningClass.Test;
 
 import org.testng.annotations.Test;
-import pages.CLContactListPage;
-import pages.CLHomePage;
+import TestNG_pom_MorningClass.pages.CLContactListPage;
+import TestNG_pom_MorningClass.pages.CLHomePage;
 import utilities.ConfigReader;
 import utilities.Driver;
 

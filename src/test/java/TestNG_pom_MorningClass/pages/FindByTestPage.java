@@ -1,12 +1,14 @@
-package pages;
+package TestNG_pom_MorningClass.pages;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
 public class FindByTestPage {
+
     public FindByTestPage() {
         PageFactory.initElements(Driver.getDriver(), this);
     }
@@ -61,4 +63,3 @@ List<WebElement> elements;
 
 ANY criteria can match
  */
-

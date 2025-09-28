@@ -1,7 +1,7 @@
-package Test;
+package TestNG_pom_MorningClass.Test;
 
 import org.testng.annotations.Test;
-import pages.FindByTestPage;
+import TestNG_pom_MorningClass.pages.FindByTestPage;
 import utilities.Driver;
 
 public class C04_FindBysFindAll {

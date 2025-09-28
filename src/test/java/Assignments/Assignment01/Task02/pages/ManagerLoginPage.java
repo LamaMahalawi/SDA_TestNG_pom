@@ -11,17 +11,17 @@ public class ManagerLoginPage {
     }
 
     @FindBy(xpath = "//button[contains(text(),'Bank Manager Login')]")
-    public WebElement managerLoginButton;
+    public WebElement managerLoginBtn;
 
     @FindBy(xpath = "//button[contains(text(),'Add Customer')]")
-    public WebElement addCustomerButton;
+    public WebElement addCustomerBtn;
 
     @FindBy(xpath = "//button[contains(text(),'Open Account')]")
-    public WebElement openAccountButton;
+    public WebElement openAccountBtn;
 
     @FindBy(xpath = "//button[contains(text(),'Customers')]")
-    public WebElement customersButton;
+    public WebElement customersBtn;
 
     @FindBy(xpath = "//button[contains(text(),'Home')]")
-    public WebElement homeButton;
+    public WebElement homeBtn;
 }

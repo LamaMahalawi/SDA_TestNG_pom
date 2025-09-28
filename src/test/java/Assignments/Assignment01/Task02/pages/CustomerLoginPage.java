@@ -13,14 +13,19 @@ public class CustomerLoginPage {
     }
 
     @FindBy(xpath = "//button[contains(text(),'Customer Login')]")
-    public WebElement customerLoginButton;
+    public WebElement customerLoginBtn;
 
     @FindBy(id = "userSelect")
     public WebElement customerDropdown;
 
     @FindBy(xpath = "//button[contains(text(),'Login')]")
-    public WebElement loginButton;
+    public WebElement loginBtn;
 
     @FindBy(xpath = "//button[contains(text(),'Home')]")
-    public WebElement homeButton;
+    public WebElement homeBtn;
+
+    public void selectCustomer(String customerName){
+        Select select = new Select(customerDropdown);
+        select.selectByVisibleText(customerName);
+    }
 }

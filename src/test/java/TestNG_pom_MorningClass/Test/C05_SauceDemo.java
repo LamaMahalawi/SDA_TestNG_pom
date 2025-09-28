@@ -1,9 +1,9 @@
-package Test;
+package TestNG_pom_MorningClass.Test;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.SDLoginPage;
-import pages.SDProductsPage;
+import TestNG_pom_MorningClass.pages.SDLoginPage;
+import TestNG_pom_MorningClass.pages.SDProductsPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 

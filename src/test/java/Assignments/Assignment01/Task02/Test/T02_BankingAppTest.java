@@ -1,83 +1,105 @@
 package Assignments.Assignment01.Task02.Test;
 
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-import org.testng.annotations.*;
-import pages.*;
 import utilities.Driver;
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.annotations.Test;
 import Assignments.Assignment01.Task02.pages.CustomerLoginPage;
 import Assignments.Assignment01.Task02.pages.AccountManagementPage;
 import Assignments.Assignment01.Task02.pages.CustomerManagementPage;
 import Assignments.Assignment01.Task02.pages.TransactionPage;
 import Assignments.Assignment01.Task02.pages.ManagerLoginPage;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
+import java.util.List;
 
 public class T02_BankingAppTest {
 
     @Test
     public void bankingAppTest() throws InterruptedException {
-        ManagerLoginPage managerPage = new ManagerLoginPage();
-        CustomerManagementPage customerPage = new CustomerManagementPage();
-        AccountManagementPage accountPage = new AccountManagementPage();
-        CustomerLoginPage customerLoginPage = new CustomerLoginPage();
-        TransactionPage transactionPage = new TransactionPage();
 
         Driver.getDriver().get("https://www.globalsqa.com/angularJs-protractor/BankingProject/#/login");
 
-        // Manager login
-        managerPage.managerLoginButton.click();
+        ManagerLoginPage manager = new ManagerLoginPage();
+        CustomerManagementPage customerMgmt = new CustomerManagementPage();
+        AccountManagementPage accountMgmt = new AccountManagementPage();
+        CustomerLoginPage customerLogin = new CustomerLoginPage();
+        TransactionPage transactionPage = new TransactionPage();
 
-        // Add 5 customers
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
+
+        // Step 1: Manager Login
+        manager.managerLoginBtn.click();
+
+        // Step 2: Add 5 customers
         for (int i = 1; i <= 5; i++) {
-            managerPage.addCustomerButton.click();
-            customerPage.firstName.sendKeys("Test" + i);
-            customerPage.lastName.sendKeys("User" + i);
-            customerPage.postCode.sendKeys("1000" + i);
-            customerPage.addCustomerSubmit.click();
+            manager.addCustomerBtn.click();
+            customerMgmt.firstName.sendKeys("User" + i);
+            customerMgmt.lastName.sendKeys("TestNG_pom_MorningClass/Test" + i);
+            customerMgmt.postCode.sendKeys("12345");
+            customerMgmt.submitAddCustomer.click();
 
-            try {
-                Alert alert = Driver.getDriver().switchTo().alert();
-                Assert.assertTrue(alert.getText().contains("Customer added successfully"));
-                alert.accept();
-            } catch (Exception e) {
-                System.out.println("No alert appeared.");
-            }
-            Thread.sleep(1000);
+            WebElement successMsg = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//span[@class='error ng-binding']")));
+            Assert.assertTrue(successMsg.getText().contains("Customer added successfully"));
+            System.out.println("Added: " + successMsg.getText());
         }
 
-        // Back to Home
-        managerPage.homeButton.click();
+        // Step 3: Open accounts for 5 customers
+        manager.openAccountBtn.click();
+        for (int i = 1; i <= 5; i++) {
+            accountMgmt.openAccount("User" + i + "TestNG_pom_MorningClass/Test" + i, "Dollar");
 
-        // Login as Customer
-        customerLoginPage.customerLoginButton.click();
-        new Select(customerLoginPage.customerDropdown).selectByIndex(1); // First customer
-        customerLoginPage.loginButton.click();
+            WebElement accountMsg = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//span[@class='error ng-binding']")));
+            Assert.assertTrue(accountMsg.getText().contains("Account created successfully"));
+            System.out.println("Account for User" + i + ": " + accountMsg.getText());
+        }
 
-        // Deposit 100 USD
-        transactionPage.depositTab.click();
-        transactionPage.amountInput.sendKeys("100");
-        transactionPage.depositButton.click();
-        Assert.assertTrue(transactionPage.message.getText().contains("Deposit Successful"));
+        // Step 4: Deposit 100 USD for each customer & Withdraw 100 from customer 3
+        manager.homeBtn.click();
+        for (int i = 1; i <= 5; i++) {
+            customerLogin.customerLoginBtn.click();
+            customerLogin.selectCustomer("User" + i + "TestNG_pom_MorningClass/Test" + i);
+            customerLogin.loginBtn.click();
 
-        // Withdraw 100 USD
-        transactionPage.withdrawTab.click();
-        transactionPage.amountInput.sendKeys("100");
-        transactionPage.withdrawButton.click();
-        Assert.assertTrue(transactionPage.message.getText().contains("Transaction successful"));
+            transactionPage.depositTab.click();
+            transactionPage.amountInput.sendKeys("100");
+            transactionPage.depositBtn.click();
 
-        // Back to Home
-        customerLoginPage.homeButton.click();
+            WebElement depositMsg = wait.until(ExpectedConditions.visibilityOf(transactionPage.message));
+            Assert.assertTrue(depositMsg.getText().contains("Deposit Successful"));
+            System.out.println("Deposit for User" + i + ": " + depositMsg.getText());
 
-        // Manager deletes customers
-        managerPage.managerLoginButton.click();
-        managerPage.customersButton.click();
+            // Withdraw 100 from 3rd customer
+            if (i == 3) {
+                transactionPage.withdrawTab.click();
+                transactionPage.amountInput.sendKeys("100");
+                transactionPage.withdrawBtn.click();
 
-        for (int i = 0; i < 5; i++) {
-            Driver.getDriver().findElement(org.openqa.selenium.By.xpath("//button[text()='Delete']")).click();
+                WebElement withdrawMsg = wait.until(ExpectedConditions.visibilityOf(transactionPage.message));
+                Assert.assertTrue(withdrawMsg.getText().contains("Transaction successful"));
+                System.out.println("Withdraw for User3: " + withdrawMsg.getText());
+            }
+
+            transactionPage.logoutBtn.click();
+            customerLogin.homeBtn.click();
+        }
+
+        // Step 5: Delete all customers
+        manager.managerLoginBtn.click();
+        manager.customersBtn.click();
+
+        List<WebElement> deleteButtons = Driver.getDriver().findElements(By.xpath("//button[text()='Delete']"));
+        for (WebElement btn : deleteButtons) {
+            btn.click();
             Thread.sleep(500);
         }
+
+        System.out.println("All customers deleted successfully!");
 
         Driver.closeDriver();
     }

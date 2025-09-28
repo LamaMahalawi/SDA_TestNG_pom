@@ -18,14 +18,17 @@ public class TransactionPage {
     public WebElement amountInput;
 
     @FindBy(xpath = "//button[text()='Deposit']")
-    public WebElement depositButton;
+    public WebElement depositBtn;
 
     @FindBy(xpath = "//button[contains(text(),'Withdrawl')]")
     public WebElement withdrawTab;
 
     @FindBy(xpath = "//button[text()='Withdraw']")
-    public WebElement withdrawButton;
+    public WebElement withdrawBtn;
 
     @FindBy(xpath = "//span[@class='error ng-binding']")
     public WebElement message;
+
+    @FindBy(xpath = "//button[contains(text(),'Logout')]")
+    public WebElement logoutBtn;
 }

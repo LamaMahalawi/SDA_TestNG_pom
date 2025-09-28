@@ -27,7 +27,7 @@ public class T01_ContactListAppTest {
         // 2. Create a new user account
         loginPage.signupBtn.click();
         String uniqueEmail = "test" + UUID.randomUUID() + "@mail.com"; // ايميل فريد
-        loginPage.register("Test", "User", uniqueEmail, "password123");
+        loginPage.register("TestNG_pom_MorningClass/Test", "User", uniqueEmail, "password123");
 
         // - Verify registration success
         Assert.assertTrue(contactListPage.logout.isDisplayed());

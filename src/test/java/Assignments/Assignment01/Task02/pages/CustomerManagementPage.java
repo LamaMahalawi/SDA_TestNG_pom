@@ -23,5 +23,8 @@ public class CustomerManagementPage {
     public WebElement postCode;
 
     @FindBy(xpath = "//button[@type='submit']")
-    public WebElement addCustomerSubmit;
+    public WebElement submitAddCustomer;
+
+    @FindBy(xpath = "//button[text()='Delete']")
+    public WebElement deleteBtn;
 }
