@@ -23,16 +23,15 @@ public class testContactListApp {
     @Test
     void contactListReportTest(){
 
-        // ✦ Navigate to the application
+        // 1. Navigate to the application
         ExtentReportManager.createTest("Contact List ");
         ExtentReportManager.log(Status.INFO, "Navigating to Contact List App");
         Driver.getDriver().get(ConfigReader.getProperty("cl_url"));
         System.out.println("Navigated to Contact List App Successfully");
 
-        // ✦ Create a new user account
+        // 2. Create a new user account && 3. Login with the created user
         ExtentReportManager.log(Status.INFO, "Creating a new user account");
         System.out.println("Creating a new user account: " + true);
-
 
         LoginPage loginPage = new LoginPage();
         Faker faker = new Faker();
@@ -56,7 +55,7 @@ public class testContactListApp {
             throw e;
         }
 
-        // ✦ Add 5 different contacts
+        // 4. Add 5 different contacts
         ExtentReportManager.log(Status.INFO, "Adding 5 contacts");
         System.out.println("Adding 5 contacts");
         for (int i = 0; i < 5; i++) {
@@ -93,7 +92,7 @@ public class testContactListApp {
             }
         }
 
-        // ✦ Verify total contact count
+        // 5. Assert that all contacts are properly added and displayed
         int rowCount = contactListPage.dataCount.size();
         try {
             Assert.assertEquals(rowCount, 5);

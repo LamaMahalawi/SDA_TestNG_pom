@@ -21,7 +21,4 @@ public class ContactListPage {
 
     @FindBy(xpath = "//td[2]")
     public List<WebElement> dataCount;
-
-    @FindBy(xpath = "//table//tr//td[4]")
-    public List<WebElement> emailColumn;
 }
