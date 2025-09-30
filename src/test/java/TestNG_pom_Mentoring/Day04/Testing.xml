@@ -1,0 +1,10 @@
+<suite name="All Test Suite">
+    <listeners>
+        <listener class-name="utilities.MyTestListener"/>
+    </listeners>
+    <test verbose="2" preserve-order="true" name="Contact list Listener and Reports">
+        <classes>
+            <class name="TestNG_pom_Mentoring.Day04.Test.T01ContactListExtentReportTest02"> </class>
+        </classes>
+    </test>
+</suite>
