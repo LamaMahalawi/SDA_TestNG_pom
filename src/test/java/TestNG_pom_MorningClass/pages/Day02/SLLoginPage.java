@@ -1,10 +1,9 @@
-package TestNG_pom_MorningClass.pages;
+package TestNG_pom_MorningClass.pages.Day02;
 
 import org.openqa.selenium.By;
 import utilities.Driver;
 
 public class SLLoginPage {
-
     private By username = By.xpath("//input[@placeholder='Username']");
     private By password = By.xpath("//input[@placeholder='Password']");
     private By loginButton = By.id("login-button");
@@ -29,6 +28,4 @@ public class SLLoginPage {
         enterPassword(password);
         clickLoginButton();
     }
-
-
 }

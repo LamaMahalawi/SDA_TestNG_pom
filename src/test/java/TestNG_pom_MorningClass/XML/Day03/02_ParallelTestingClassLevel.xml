@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Parallel Test Suite" parallel="classes" thread-count="6">
+    <test verbose="2" preserve-order="true" name="ParallelTesting">
+        <classes>
+            <class name="TestNG_pom_MorningClass.Test.Day02.C08_MethodChain"> </class>
+            <class name="TestNG_pom_MorningClass.Test.Day01.C01_GetDriver"> </class>
+            <class name="TestNG_pom_MorningClass.Test.Day01.C04_FindBysFindAll"> </class>
+            <class name="TestNG_pom_MorningClass.Test.Day01.C02_Properties"> </class>
+            <class name="TestNG_pom_MorningClass.Test.Day02.C07_ActionsMethods"> </class>
+            <class name="TestNG_pom_MorningClass.Test.Day02.C09_DynamicXPath"> </class>
+        </classes>
+    </test>
+</suite>

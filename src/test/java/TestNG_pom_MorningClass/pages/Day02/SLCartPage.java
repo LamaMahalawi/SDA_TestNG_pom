@@ -1,9 +1,8 @@
-package TestNG_pom_MorningClass.pages;
+package TestNG_pom_MorningClass.pages.Day02;
 
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import utilities.Driver;
-
 import static org.testng.Assert.assertTrue;
 
 public class SLCartPage {
@@ -21,6 +20,4 @@ public class SLCartPage {
         assertTrue(Driver.getDriver().findElement(By.xpath(String.format(productXPathInCartByName, productName))).isDisplayed());
         return this;
     }
-
-
 }

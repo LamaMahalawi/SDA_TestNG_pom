@@ -1,4 +1,4 @@
-package TestNG_pom_MorningClass.pages;
+package TestNG_pom_MorningClass.pages.Day01;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

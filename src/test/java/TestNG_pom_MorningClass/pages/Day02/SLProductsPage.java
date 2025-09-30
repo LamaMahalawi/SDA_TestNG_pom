@@ -1,15 +1,10 @@
-package TestNG_pom_MorningClass.pages;
+package TestNG_pom_MorningClass.pages.Day02;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utilities.Driver;
-
-import java.time.Duration;
 
 public class SLProductsPage {
 
@@ -61,6 +56,4 @@ public class SLProductsPage {
         Assert.assertEquals(Double.parseDouble(strPrice.replaceAll("[^0-9.]", "")), price);
         return this;
     }
-
-
 }

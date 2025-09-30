@@ -1,8 +1,8 @@
-package TestNG_pom_MorningClass.Test;
+package TestNG_pom_MorningClass.Test.Day02;
 
 
 import org.testng.annotations.Test;
-import TestNG_pom_MorningClass.pages.SLLoginPage;
+import TestNG_pom_MorningClass.pages.Day02.SLLoginPage;
 import utilities.ConfigReader;
 import utilities.Driver;
 

@@ -1,4 +1,4 @@
-package TestNG_pom_MorningClass.Test;
+package TestNG_pom_MorningClass.Test.Day01;
 
 import org.testng.annotations.Test;
 import utilities.Driver;
