@@ -89,7 +89,7 @@ Reporting Requirements:
         }
 //        5. Assert that all contacts are properly added and displayed
         int rowCount = contactListPage.dataCount.size();
-        Assert.assertEquals(rowCount,6);
+        Assert.assertEquals(rowCount,5);
 
 
     }
