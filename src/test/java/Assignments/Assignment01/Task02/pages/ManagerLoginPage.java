@@ -1,6 +1,5 @@
 package Assignments.Assignment01.Task02.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -8,7 +7,7 @@ import utilities.Driver;
 
 public class ManagerLoginPage {
     public ManagerLoginPage(){
-        PageFactory.initElements(Driver.getDriver(), this);
+    PageFactory.initElements(Driver.getDriver(), this);
     }
 
     @FindBy(xpath = "//button[text()='Bank Manager Login']")
@@ -25,6 +24,4 @@ public class ManagerLoginPage {
 
     @FindBy(xpath = "/html/body/div/div/div[1]/button[1]")
     public WebElement homeBtn;
-
-
 }

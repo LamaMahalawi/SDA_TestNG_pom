@@ -8,7 +8,7 @@ import utilities.Driver;
 
 public class AccountManagementPage {
     public AccountManagementPage(){
-        PageFactory.initElements(Driver.getDriver(), this);
+    PageFactory.initElements(Driver.getDriver(), this);
     }
 
     @FindBy(id = "userSelect")

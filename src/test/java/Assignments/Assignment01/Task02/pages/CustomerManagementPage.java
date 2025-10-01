@@ -4,12 +4,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
-
 import java.util.List;
 
 public class CustomerManagementPage {
     public CustomerManagementPage(){
-        PageFactory.initElements(Driver.getDriver(), this);
+    PageFactory.initElements(Driver.getDriver(), this);
     }
 
     @FindBy(xpath = "//input[@placeholder='First Name']")

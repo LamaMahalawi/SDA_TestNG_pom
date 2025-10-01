@@ -7,7 +7,7 @@ import utilities.Driver;
 
 public class TransactionPage {
     public TransactionPage(){
-        PageFactory.initElements(Driver.getDriver(), this);
+    PageFactory.initElements(Driver.getDriver(), this);
     }
 
     @FindBy(xpath = "//button[contains(text(),'Deposit')]")
@@ -22,15 +22,11 @@ public class TransactionPage {
     @FindBy(xpath = "//button[text()='Deposit']")
     public WebElement confirmDepositBtn;
 
-    @FindBy(xpath = "//button[text()='Withdrawl']")
-    public WebElement withdrawTab;
-
     @FindBy(xpath = "//strong[2]")
     public WebElement balance;
 
     @FindBy(xpath = "/html/body/div/div/div[2]/div/div[4]/div/form/button")
     public WebElement confirmwithdrawBtn;
-
 
 
     // Deposit
