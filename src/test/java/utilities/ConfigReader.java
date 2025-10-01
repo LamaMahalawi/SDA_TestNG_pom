@@ -8,7 +8,7 @@ public class ConfigReader {
 
     static {
         try {
-            String path = "configuration1.properties";
+            String path = "configuration.properties";
             FileInputStream input = new FileInputStream(path);
             properties = new Properties();
             properties.load(input);

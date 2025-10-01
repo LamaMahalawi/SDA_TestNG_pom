@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import utilities.Driver;
 
 public class AccountManagementPage {
-    public AccountManagementPage() {
+    public AccountManagementPage(){
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
@@ -20,11 +20,14 @@ public class AccountManagementPage {
     @FindBy(xpath = "//button[text()='Process']")
     public WebElement processBtn;
 
+   //openAccount
     public void openAccount(String customerName, String currency){
-        Select customerSelect = new Select(customerDropdown);
-        customerSelect.selectByVisibleText(customerName);
-        Select currencySelect = new Select(currencyDropdown);
-        currencySelect.selectByVisibleText(currency);
+        Select selectCustomer = new Select(customerDropdown);
+        selectCustomer.selectByVisibleText(customerName);
+
+        Select selectCurrency = new Select(currencyDropdown);
+        selectCurrency.selectByVisibleText(currency);
+
         processBtn.click();
     }
 }
