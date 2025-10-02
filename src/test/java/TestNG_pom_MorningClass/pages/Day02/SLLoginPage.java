@@ -2,6 +2,7 @@ package TestNG_pom_MorningClass.pages.Day02;
 
 import org.openqa.selenium.By;
 import utilities.Driver;
+import utilities.ReusableMethods;
 
 public class SLLoginPage {
     private By username = By.xpath("//input[@placeholder='Username']");
@@ -19,7 +20,7 @@ public class SLLoginPage {
     }
 
     public SLProductsPage clickLoginButton() {
-        Driver.getDriver().findElement(loginButton).click();
+        ReusableMethods.clickWithWait(loginButton);
         return new SLProductsPage();
     }
 
@@ -28,4 +29,6 @@ public class SLLoginPage {
         enterPassword(password);
         clickLoginButton();
     }
+
+
 }

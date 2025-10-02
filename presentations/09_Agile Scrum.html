@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agile Scrum Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .presentation-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            position: relative;
+            min-height: 90vh;
+        }
+
+        .slide {
+            min-height: 90vh;
+            padding: 40px;
+            display: none;
+            position: relative;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            margin: -40px -40px 30px -40px;
+            text-align: center;
+            border-bottom: 5px solid #2980b9;
+        }
+
+        .slide-header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+
+        .slide-header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .role-box {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #00b894, #00cec9);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .process-box {
+            background: linear-gradient(135deg, #fd79a8, #e84393);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #2d3436, #636e72);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9ff;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .real-world-example {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .real-world-example h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .navigation-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(135deg, #2980b9, #1f618d);
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.5;
+        }
+
+        .slide-counter {
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            margin: 0 5px;
+            text-align: center;
+            min-width: 35px;
+        }
+
+        .scrum-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .scrum-step {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            z-index: 2;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .scrum-connector {
+            position: absolute;
+            height: 3px;
+            background: #3498db;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .story-points-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .story-point-card {
+            background: #f8f9fa;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .story-point-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .point-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 5px;
+        }
+
+        .point-description {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .two-column, .three-column {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-container {
+                bottom: 15px;
+                right: 15px;
+                padding: 6px;
+                gap: 6px;
+            }
+
+            .nav-button {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+
+            .slide {
+                padding: 20px;
+            }
+
+            .slide-header {
+                padding: 20px;
+                margin: -20px -20px 20px -20px;
+            }
+
+            .scrum-flow {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .scrum-step {
+                margin-bottom: 20px;
+            }
+
+            .scrum-connector {
+                display: none;
+            }
+        }
+
+        .slide {
+            opacity: 0;
+            transform: translateX(30px);
+            transition: all 0.4s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <!-- Slide 1: Title Slide -->
+    <div class="slide active">
+        <div class="slide-header">
+            <h1>Agile Scrum Framework</h1>
+            <p>Comprehensive Guide to Scrum Methodology</p>
+        </div>
+        <div class="content-box">
+            <h2>What is Scrum?</h2>
+            <p>Scrum is an <span class="highlight">agile project management framework</span> used in software development and other industries. It promotes collaboration, flexibility, and adaptability by organizing work into short, time-boxed iterations called <span class="highlight">"sprints"</span>.</p>
+
+            <div class="real-world-example">
+                <h4>Real World Example:</h4>
+                <p>A software development team at a fintech company uses Scrum to develop a new mobile banking app. They work in 2-week sprints to deliver incremental features like login functionality, account overview, and money transfer capabilities.</p>
+            </div>
+
+            <h3>Key Scrum Components:</h3>
+            <ul>
+                <li>Product Backlog</li>
+                <li>Sprint Backlog</li>
+                <li>Sprint</li>
+                <li>Working Increment of the software</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 2: Scrum Roles -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Scrum Roles</h1>
+            <p>Who's Who in the Scrum Team</p>
+        </div>
+
+        <div class="three-column">
+            <div class="role-box">
+                <h3>Product Owner</h3>
+                <p>Represents stakeholders, manages the Product Backlog, prioritizes features, defines the product vision, and ensures the team delivers maximum value.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>At an e-commerce company, the Product Owner prioritizes features based on customer feedback and business value, ensuring the development team works on the most important items first.</p>
+                </div>
+            </div>
+
+            <div class="role-box">
+                <h3>Scrum Master</h3>
+                <p>Acts as a facilitator and coach, ensures adherence to Scrum principles, removes impediments, fosters collaboration, and shields the team from distractions.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>When a development team faces delays due to infrastructure issues, the Scrum Master works with IT to resolve the problem, allowing the team to focus on development.</p>
+                </div>
+            </div>
+
+            <div class="role-box">
+                <h3>Development Team</h3>
+                <p>A self-organizing, cross-functional group responsible for delivering potentially shippable product increments, managing their own work, and ensuring quality.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>A development team at a SaaS company includes frontend and backend developers, UX designers, and QA engineers who collaborate to deliver complete features each sprint.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Scrum Artifacts -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Scrum Artifacts</h1>
+            <p>Key Work Items in Scrum</p>
+        </div>
+
+        <div class="two-column">
+            <div class="content-box">
+                <h3>Product Backlog</h3>
+                <p>This is like a <span class="highlight">to-do list for the project</span>, and it's ranked by importance. It's a prioritized and flexible list of features and requirements.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>A product backlog for a project management tool might include items like: "User authentication", "Create new project", "Add team members", "Task assignment", "Progress tracking", etc.</p>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <h3>Sprint Backlog</h3>
+                <p>It's a <span class="highlight">smaller to-do list for a short period</span> (a few weeks). It contains the tasks the team commits to completing during the sprint.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>For a 2-week sprint, the sprint backlog might include: "Implement user profile page", "Fix login bug", "Optimize database queries", "Write unit tests for payment module".</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>Increment</h3>
+            <p>This is the <span class="highlight">part of the product that's finished during a Sprint</span>. It represents a potentially shippable product improvement.</p>
+
+            <div class="real-world-example">
+                <h4>Real World Example:</h4>
+                <p>After a sprint, a team delivers a working "checkout process" for an e-commerce site, including cart management, payment integration, and order confirmation.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Scrum Events -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Scrum Events</h1>
+            <p>The Scrum Schedule and Ceremonies</p>
+        </div>
+
+        <div class="scrum-flow">
+            <div class="scrum-step">Sprint Planning</div>
+            <div class="scrum-connector" style="width: calc(100% - 640px); left: 100px;"></div>
+            <div class="scrum-step">Daily Scrum</div>
+            <div class="scrum-connector" style="width: calc(100% - 640px); left: 260px;"></div>
+            <div class="scrum-step">Sprint Review</div>
+            <div class="scrum-connector" style="width: calc(100% - 640px); left: 420px;"></div>
+            <div class="scrum-step">Sprint Retrospective</div>
+        </div>
+
+        <div class="two-column">
+            <div class="process-box">
+                <h3>Sprint Planning</h3>
+                <p>At the start of each Sprint, the team figures out what to do. They pick items from the product backlog and plan how to complete them.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>A team plans their upcoming 2-week sprint by selecting user stories from the product backlog, estimating effort, and defining the sprint goal: "Implement user dashboard with basic analytics".</p>
+                </div>
+            </div>
+
+            <div class="process-box">
+                <h3>Daily Scrum</h3>
+                <p>Every day, the team has a quick meeting to talk about what's happening. Each member shares what they did yesterday, what they plan to do today, and any obstacles.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>During a 15-minute daily standup, a developer mentions they're blocked by an API issue. The Scrum Master immediately arranges a follow-up meeting with the API team to resolve it.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="process-box">
+                <h3>Sprint Review</h3>
+                <p>After a Sprint, the team shows what they've done and gets feedback from stakeholders. It's like a show-and-tell meeting.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>The team demonstrates the new search functionality to product managers and customer representatives, who provide feedback that influences the next sprint's priorities.</p>
+                </div>
+            </div>
+
+            <div class="process-box">
+                <h3>Sprint Retrospective</h3>
+                <p>The team looks back on their work and plans to do better next time. They discuss what went well and what could be improved.</p>
+
+                <div class="real-world-example">
+                    <h4>Real World Example:</h4>
+                    <p>After a challenging sprint, the team identifies that unclear requirements caused delays. They decide to implement a "definition of ready" for all user stories in future sprints.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Backlog Grooming -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Backlog Grooming (Refinement)</h1>
+            <p>Keeping the Backlog Healthy and Ready</p>
+        </div>
+
+        <div class="content-box">
+            <h3>What is Backlog Grooming?</h3>
+            <p>Grooming session, also known as backlog refinement, is a collaborative process where the product <span class="highlight">backlog is reviewed, prioritized, and refined</span>. It involves discussions between the product owner, Scrum Master, and development team to clarify requirements, estimate effort, and ensure that upcoming work items are well-defined and ready for sprint planning.</p>
+
+            <div class="real-world-example">
+                <h4>Real World Example:</h4>
+                <p>During a 1-hour grooming session, the team breaks down a large "payment integration" epic into smaller user stories, adds acceptance criteria, and estimates story points for each.</p>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="content-box">
+                <h3>Activities During Grooming:</h3>
+                <ul>
+                    <li>Reviewing and prioritizing backlog items</li>
+                    <li>Breaking down large items into smaller ones</li>
+                    <li>Adding detail and acceptance criteria</li>
+                    <li>Estimating effort (story points)</li>
+                    <li>Removing obsolete items</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>Benefits of Regular Grooming:</h3>
+                <ul>
+                    <li>Clearer requirements for the team</li>
+                    <li>More accurate sprint planning</li>
+                    <li>Reduced uncertainty during sprints</li>
+                    <li>Better alignment between team and stakeholders</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Product Backlog vs Sprint Backlog -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Product Backlog vs Sprint Backlog</h1>
+            <p>Understanding the Difference</p>
+        </div>
+
+        <table class="comparison-table">
+            <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Product Backlog</th>
+                <th>Sprint Backlog</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Scope</strong></td>
+                <td>Entire product</td>
+                <td>Current sprint</td>
+            </tr>
+            <tr>
+                <td><strong>Ownership</strong></td>
+                <td>Product owner</td>
+                <td>Development team</td>
+            </tr>
+            <tr>
+                <td><strong>Purpose</strong></td>
+                <td>Guide overall product development</td>
+                <td>Break down work into manageable tasks</td>
+            </tr>
+            <tr>
+                <td><strong>Flexibility</strong></td>
+                <td>Highly dynamic and evolving</td>
+                <td>More stable within a sprint</td>
+            </tr>
+            <tr>
+                <td><strong>Level of detail</strong></td>
+                <td>High-level items</td>
+                <td>Detailed tasks and estimates</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="content-box">
+            <h3>Relationship Between Backlogs</h3>
+            <p>The product backlog provides the overall vision and direction for the product, while the sprint backlog breaks down that vision into smaller, more manageable pieces of work for the current sprint.</p>
+
+            <div class="real-world-example">
+                <h4>Real World Example:</h4>
+                <p>A product backlog for a mobile app might contain items like "User registration", "Push notifications", "In-app purchases". The sprint backlog for the current 2-week sprint would contain specific tasks to implement the "User registration" feature.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Epic, Feature, User Story, Task -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Work Breakdown Structure</h1>
+            <p>Epic, Feature, User Story, and Task</p>
+        </div>
+
+        <div class="three-column">
+            <div class="feature-card">
+                <h3>Epic</h3>
+                <p>Like a big goal or theme for a project. Represents a large body of work that can be broken down into smaller pieces.</p>
+
+                <div class="real-world-example">
+                    <h4>Example:</h4>
+                    <p>"User Management System" - A large epic that encompasses registration, login, profile management, and password recovery.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3>Feature</h3>
+                <p>A smaller part of that goal, like a specific function or feature in a product.</p>
+
+                <div class="real-world-example">
+                    <h4>Example:</h4>
+                    <p>"User Registration" - A feature within the "User Management System" epic.</p>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3>User Story</h3>
+                <p>A simple description of what a user needs, like a request from a customer.</p>
+
+                <div class="real-world-example">
+                    <h4>Example:</h4>
+                    <p>"As a new user, I want to register with my email and password so that I can access the application."</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>Task</h3>
+            <p>A tiny job that a team member needs to do to make the user story happen, like writing code or testing.</p>
+
+            <div class="real-world-example">
+                <h4>Example:</h4>
+                <p>Tasks for the "User Registration" user story might include: "Create registration form UI", "Implement backend validation", "Write unit tests", "Perform integration testing".</p>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>Hierarchy of Work Items</h3>
+            <p>Epic → Feature → User Story → Task</p>
+            <p>This hierarchy helps teams break down large initiatives into manageable pieces that can be completed within sprints.</p>
+        </div>
+    </div>
+
+    <!-- Slide 8: Story Pointing -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Story Pointing</h1>
+            <p>Estimating Effort in Agile</p>
+        </div>
+
+        <div class="content-box">
+            <h3>What is Story Pointing?</h3>
+            <p>Story pointing is a technique used in Agile software development to estimate the effort or complexity of individual user stories or tasks. This is typically done in Sprint planning using a scale like Fibonacci numbers (e.g., 1, 2, 3, 5, 8, 13, etc.) or other scales.</p>
+
+            <div class="real-world-example">
+                <h4>Real World Example:</h4>
+                <p>A team uses Planning Poker to estimate a new feature. Each member privately selects a story point value, then reveals their estimate simultaneously. Differences in estimates lead to discussions that clarify requirements and complexity.</p>
+            </div>
+        </div>
+
+        <div class="story-points-grid">
+            <div class="story-point-card">
+                <div class="point-value">1</div>
+                <div class="point-description">Very small task, minimal effort</div>
+            </div>
+            <div class="story-point-card">
+                <div class="point-value">2</div>
+                <div class="point-description">Small task, straightforward</div>
+            </div>
+            <div class="story-point-card">
+                <div class="point-value">3</div>
+                <div class="point-description">Medium task, some complexity</div>
+            </div>
+            <div class="story-point-card">
+                <div class="point-value">5</div>
+                <div class="point-description">Significant task, moderate complexity</div>
+            </div>
+            <div class="story-point-card">
+                <div class="point-value">8</div>
+                <div class="point-description">Large task, high complexity</div>
+            </div>
+            <div class="story-point-card">
+                <div class="point-value">13</div>
+                <div class="point-description">Very large task, very high complexity</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Story Pointing Example -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Story Pointing Example</h1>
+            <p>Treehouse Construction</p>
+        </div>
+
+        <div class="content-box">
+            <h3>User Story:</h3>
+            <p>As a child, I want a treehouse in my backyard so I can have a cool place to play.</p>
+
+            <h4>Acceptance Criteria:</h4>
+            <ul>
+                <li>The treehouse must be safe and sturdy.</li>
+                <li>It should have a ladder or stairs for access.</li>
+                <li>The treehouse should have walls and a roof to protect from rain and sun.</li>
+                <li>It should have at least one window.</li>
+                <li>There should be a small platform or railing for safety.</li>
+                <li>The treehouse should be big enough for me and my friends to play inside.</li>
+            </ul>
+        </div>
+
+        <div class="two-column">
+            <div class="content-box">
+                <h3>Task Breakdown and Story Points:</h3>
+                <ul>
+                    <li><strong>Inspect the Tree (1 story point)</strong> - Examine the tree's health and suitability</li>
+                    <li><strong>Gather Materials (3 story points)</strong> - Create list and estimate materials</li>
+                    <li><strong>Build the Foundation (5 story points)</strong> - Construct secure base</li>
+                    <li><strong>Frame the Treehouse (8 story points)</strong> - Build main structure</li>
+                    <li><strong>Add Roof and Walls (5 story points)</strong> - Install protection</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>More Tasks:</h3>
+                <ul>
+                    <li><strong>Install Window (2 story points)</strong> - Create opening and install</li>
+                    <li><strong>Add Access (3 story points)</strong> - Create safe way to access</li>
+                    <li><strong>Safety Features (4 story points)</strong> - Install railings, check hazards</li>
+                    <li><strong>Finishing Touches (2 story points)</strong> - Add features and decorations</li>
+                    <li><strong>Cleanup and Inspection (1 story point)</strong> - Final check and cleanup</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>Total Story Points: <span class="highlight">34</span></h3>
+            <p>This total helps the team understand the overall effort required and plan accordingly.</p>
+        </div>
+    </div>
+
+    <!-- Slide 10: Sprint Review vs Retrospective -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Sprint Review vs Retrospective</h1>
+            <p>Two Different but Complementary Events</p>
+        </div>
+
+        <table class="comparison-table">
+            <thead>
+            <tr>
+                <th>Feature</th>
+                <th>Sprint Review</th>
+                <th>Sprint Retrospective</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>Purpose</strong></td>
+                <td>Inspect and adapt the increment</td>
+                <td>Identify areas for improvement</td>
+            </tr>
+            <tr>
+                <td><strong>Attendees</strong></td>
+                <td>Scrum team, stakeholders</td>
+                <td>Scrum team only</td>
+            </tr>
+            <tr>
+                <td><strong>Format</strong></td>
+                <td>Demonstration of the increment, followed by discussion and feedback</td>
+                <td>Discussion and reflection on the sprint, followed by the identification of actions to improve</td>
+            </tr>
+            <tr>
+                <td><strong>Outcome</strong></td>
+                <td>Updated product backlog based on feedback received</td>
+                <td>Action plan for the next sprint</td>
+            </tr>
+            <tr>
+                <td><strong>Focus</strong></td>
+                <td>Product</td>
+                <td>Process</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div class="content-box">
+            <h3>Key Difference:</h3>
+            <p>A Sprint Review is like showing your work to the stakeholders, while a Sprint Retrospective is like a team meeting to figure out how to do better next time.</p>
+
+            <div class="real-world-example">
+                <h4>Real World Example:</h4>
+                <p>In a Sprint Review, the team demonstrates the new search functionality to product managers. In the Retrospective that follows, the team discusses how to improve their code review process to catch bugs earlier.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Scrum in Real World -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Scrum in the Real World</h1>
+            <p>Practical Applications and Benefits</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Why Organizations Adopt Scrum:</h3>
+            <ul>
+                <li><strong>Faster Time to Market:</strong> Delivering value incrementally allows for quicker releases</li>
+                <li><strong>Adaptability:</strong> Ability to respond to changing requirements and market conditions</li>
+                <li><strong>Transparency:</strong> Clear visibility into progress and challenges</li>
+                <li><strong>Improved Quality:</strong> Regular feedback and continuous improvement</li>
+                <li><strong>Team Empowerment:</strong> Self-organizing teams are more motivated and productive</li>
+            </ul>
+        </div>
+
+        <div class="two-column">
+            <div class="content-box">
+                <h3>Common Challenges:</h3>
+                <ul>
+                    <li>Resistance to change from traditional waterfall approaches</li>
+                    <li>Difficulty estimating accurately in early sprints</li>
+                    <li>Balancing flexibility with necessary documentation</li>
+                    <li>Managing stakeholder expectations for fixed-scope projects</li>
+                    <li>Ensuring proper Scrum Master and Product Owner training</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>Success Factors:</h3>
+                <ul>
+                    <li>Strong commitment from leadership</li>
+                    <li>Proper training and coaching</li>
+                    <li>Cross-functional, dedicated teams</li>
+                    <li>Regular inspection and adaptation</li>
+                    <li>Focus on delivering value, not just completing tasks</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>Scrum Beyond Software Development:</h3>
+            <p>While Scrum originated in software development, it's now successfully applied in various industries including marketing, education, healthcare, and manufacturing.</p>
+
+            <div class="real-world-example">
+                <h4>Real World Example:</h4>
+                <p>A marketing team uses Scrum to plan and execute campaigns, with sprints focused on specific marketing initiatives like "Q4 Product Launch" or "Social Media Engagement Boost".</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 12: Summary -->
+    <div class="slide">
+        <div class="slide-header">
+            <h1>Scrum Framework Summary</h1>
+            <p>Key Takeaways</p>
+        </div>
+
+        <div class="content-box">
+            <h3>Scrum Essentials:</h3>
+            <ul>
+                <li><strong>Framework, Not Methodology:</strong> Scrum provides structure but allows teams to determine their own practices</li>
+                <li><strong>Empirical Process Control:</strong> Scrum is founded on transparency, inspection, and adaptation</li>
+                <li><strong>Value-Driven Delivery:</strong> Focus on delivering the highest value items first</li>
+                <li><strong>Continuous Improvement:</strong> Regular retrospectives ensure the team gets better over time</li>
+            </ul>
+        </div>
+
+        <div class="two-column">
+            <div class="content-box">
+                <h3>Scrum Values:</h3>
+                <ul>
+                    <li><strong>Commitment:</strong> Team members personally commit to achieving team goals</li>
+                    <li><strong>Courage:</strong> Team members have courage to do the right thing and work on tough problems</li>
+                    <li><strong>Focus:</strong> Everyone focuses on the work of the sprint and the goals of the team</li>
+                    <li><strong>Openness:</strong> The team and stakeholders agree to be open about all the work and challenges</li>
+                    <li><strong>Respect:</strong> Team members respect each other to be capable, independent people</li>
+                </ul>
+            </div>
+
+            <div class="content-box">
+                <h3>Scrum Benefits:</h3>
+                <ul>
+                    <li>Increased productivity and quality</li>
+                    <li>Better risk management</li>
+                    <li>Higher customer satisfaction</li>
+                    <li>Improved team morale</li>
+                    <li>Faster return on investment</li>
+                    <li>Better project visibility</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-box">
+            <h3>Thank You!</h3>
+            <p>Scrum is a powerful framework that, when implemented correctly, can transform how teams work and deliver value. Remember that Scrum is simple to understand but difficult to master - continuous learning and adaptation are key to success.</p>
+        </div>
+    </div>
+</div>
+
+<div class="navigation-container">
+    <button class="nav-button" id="prevBtn" disabled>←</button>
+    <span class="slide-counter" id="slideCounter">1/12</span>
+    <button class="nav-button" id="nextBtn">→</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const slideCounter = document.getElementById('slideCounter');
+        let currentSlide = 0;
+
+        // Initialize the presentation
+        showSlide(currentSlide);
+
+        // Next button event listener
+        nextBtn.addEventListener('click', function() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Previous button event listener
+        prevBtn.addEventListener('click', function() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            }
+        });
+
+        // Function to show a specific slide
+        function showSlide(index) {
+            // Hide all slides
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+            });
+
+            // Show the current slide
+            slides[index].classList.add('active');
+
+            // Update navigation buttons
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slides.length - 1;
+
+            // Update slide counter
+            slideCounter.textContent = `${index + 1}/${slides.length}`;
+
+            // Scroll to top of the slide
+            window.scrollTo(0, 0);
+        }
+    });
+</script>
+</body>
+</html>

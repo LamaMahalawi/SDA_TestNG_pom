@@ -1,9 +1,11 @@
 package TestNG_pom_MorningClass.pages.Day01;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
+import utilities.ReusableMethods;
 
 public class CLHomePage {
 
@@ -19,6 +21,21 @@ public class CLHomePage {
 
     @FindBy(id = "submit")
     public WebElement submit;
+
+    @FindBy(id = "error")
+    public WebElement error;
+
+    private By errorBy = By.id("error");
+
+    public String getErrorTextBy() {
+        return ReusableMethods.waitForVisibility(errorBy).getText();
+    }
+
+    public String getErrorText() {
+        return error.getText();
+    }
+
+
 
 
 }

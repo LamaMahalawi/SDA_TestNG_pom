@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Testing Life Cycle - Interactive Presentation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slides-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100vw;
+            height: 100vh;
+            padding: 40px;
+            overflow-y: auto;
+            background: white;
+        }
+
+        .slide-header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            margin: -40px -40px 30px -40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        h3 {
+            color: #34495e;
+            margin: 25px 0 15px 0;
+        }
+
+        .phase-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .phase-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid #3498db;
+        }
+
+        .phase-number {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .example-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #1976d2;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .technique-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .technique-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 4px solid #e74c3c;
+        }
+
+        .best-practices {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .checklist {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #ff9800;
+        }
+
+        /* Navigation Controls */
+        .navigation-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 8px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+        }
+
+        .nav-button:hover {
+            background: linear-gradient(135deg, #2980b9, #1f618d);
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+            opacity: 0.5;
+        }
+
+        .nav-button:disabled:hover {
+            background: #95a5a6;
+            transform: none;
+        }
+
+        .slide-counter {
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            margin: 0 5px;
+            text-align: center;
+            min-width: 35px;
+        }
+
+        .nav-arrow {
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .phase-overview, .technique-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .slide {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .navigation-container {
+                bottom: 15px;
+                right: 15px;
+                padding: 6px;
+                gap: 6px;
+            }
+
+            .nav-button {
+                width: 30px;
+                height: 30px;
+                font-size: 14px;
+            }
+
+            .slide-counter {
+                font-size: 10px;
+                min-width: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-container" id="slidesContainer">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Software Testing Life Cycle</h1>
+                <p style="font-size: 1.2em; margin: 20px 0 0 0;">A Comprehensive Guide to Professional Software Testing</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 40px;">
+                <div style="width: 300px; height: 200px; margin: 0 auto; background: linear-gradient(135deg, #1a5276, #2874a6); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5em;">
+                    STLC Process
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>Professional Testing Approach</h3>
+                <p>Following STLC helps organizations deliver high-quality software by detecting issues early, reducing costs, and improving customer satisfaction through rigorous testing methodologies.</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: STLC Phases Overview -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>STLC Phases Overview</h1>
+            </div>
+
+            <div class="phase-overview">
+                <div class="phase-card">
+                    <div class="phase-number">1</div>
+                    <h3>Requirement Analysis</h3>
+                    <p>Understanding software needs and testing scope</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">2</div>
+                    <h3>Test Planning</h3>
+                    <p>Creating comprehensive test strategy and plan</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">3</div>
+                    <h3>Test Design</h3>
+                    <p>Designing detailed test cases and procedures</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">4</div>
+                    <h3>Test Execution</h3>
+                    <p>Running tests and recording results</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">5</div>
+                    <h3>Defect Reporting</h3>
+                    <p>Logging and tracking identified issues</p>
+                </div>
+                <div class="phase-card">
+                    <div class="phase-number">6</div>
+                    <h3>Test Closure</h3>
+                    <p>Evaluating testing process and results</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Application</div>
+                <p>Each phase builds upon the previous one, creating a structured approach to software testing that ensures comprehensive coverage and efficient defect detection.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Requirement Analysis -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Phase 1: Requirement Analysis</h1>
+            </div>
+
+            <p>In this initial phase, the testing team examines and analyzes software requirements to understand what needs to be tested and the scope of testing. Testers work closely with business analysts, developers, and stakeholders to ensure they have a clear understanding of the project's objectives and expectations.</p>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Example: Payment Processing System</div>
+                <p><strong>Scenario:</strong> Testing team analyzes requirements for a new payment gateway integration.</p>
+                <p><strong>Activities:</strong></p>
+                <ul>
+                    <li>Review API documentation from payment providers</li>
+                    <li>Identify supported payment methods (credit cards, digital wallets, bank transfers)</li>
+                    <li>Understand security requirements (PCI DSS compliance)</li>
+                    <li>Determine error handling scenarios for declined transactions</li>
+                    <li>Identify integration points with existing order management system</li>
+                </ul>
+                <p><strong>Outcome:</strong> Clear understanding of testing scope, including functional, security, and integration testing requirements.</p>
+            </div>
+
+            <h3>Key Activities in Requirement Analysis</h3>
+            <ul>
+                <li>Identify testable requirements</li>
+                <li>Analyze requirement feasibility and testability</li>
+                <li>Identify testing scope and constraints</li>
+                <li>Prepare Requirement Traceability Matrix (RTM)</li>
+                <li>Identify test environment requirements</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Test Planning -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Phase 2: Test Planning</h1>
+            </div>
+
+            <p>Once requirements are well-understood, the testing team creates a comprehensive test plan. This plan outlines the testing strategy, objectives, scope, resources, schedule, and deliverables.</p>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Example: Mobile Application Launch</div>
+                <p><strong>Scenario:</strong> Planning testing for a new mobile banking application.</p>
+                <p><strong>Test Plan Components:</strong></p>
+                <ul>
+                    <li><strong>Objectives:</strong> Ensure secure transactions, intuitive UX, and compatibility across devices</li>
+                    <li><strong>Scope:</strong> Core banking features, security protocols, performance under load</li>
+                    <li><strong>Resources:</strong> 3 testers, mobile device lab, performance testing tools</li>
+                    <li><strong>Schedule:</strong> 4-week testing cycle with specific milestones</li>
+                    <li><strong>Risks:</strong> Device fragmentation, security vulnerabilities, third-party API dependencies</li>
+                </ul>
+            </div>
+
+            <h3>Test Plan Document Structure</h3>
+            <table>
+                <tr>
+                    <th>Section</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Introduction</td>
+                    <td>Project overview and test plan purpose</td>
+                </tr>
+                <tr>
+                    <td>Scope and Objectives</td>
+                    <td>What will be tested and testing goals</td>
+                </tr>
+                <tr>
+                    <td>Test Strategy</td>
+                    <td>Testing approach, levels, types, and methods</td>
+                </tr>
+                <tr>
+                    <td>Schedule and Resources</td>
+                    <td>Timeline, milestones, and required resources</td>
+                </tr>
+                <tr>
+                    <td>Risks and Mitigation</td>
+                    <td>Potential risks and contingency plans</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 5: Test Design -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Phase 3: Test Design</h1>
+            </div>
+
+            <p>The test design phase involves specifying detailed test cases, test data, and test procedures based on the test plan and requirements. This phase determines testing techniques and methods, and prepares necessary test documentation to guide the actual testing process.</p>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Example: User Registration System</div>
+                <p><strong>Scenario:</strong> Designing test cases for a new user registration feature.</p>
+                <p><strong>Test Design Activities:</strong></p>
+                <ul>
+                    <li><strong>Test Cases:</strong> 25 test cases covering valid/invalid inputs, edge cases, and error conditions</li>
+                    <li><strong>Test Data:</strong> Sample user profiles, invalid email formats, duplicate usernames</li>
+                    <li><strong>Techniques:</strong> Equivalence partitioning for email validation, boundary value analysis for password length</li>
+                    <li><strong>Documentation:</strong> Step-by-step test procedures, expected results, preconditions</li>
+                </ul>
+            </div>
+
+            <h3>Characteristics of Good Test Cases</h3>
+            <div class="checklist">
+                <ul>
+                    <li><strong>Clarity:</strong> Easy to understand and free from ambiguity</li>
+                    <li><strong>Specificity:</strong> Focus on testing a single, well-defined aspect</li>
+                    <li><strong>Reproducibility:</strong> Yield consistent results when executed multiple times</li>
+                    <li><strong>Independence:</strong> Not dependent on each other, executable in any order</li>
+                    <li><strong>Traceability:</strong> Linked to requirements for clear coverage</li>
+                    <li><strong>Coverage:</strong> Encompass positive, negative, and boundary scenarios</li>
+                    <li><strong>Manageability:</strong> Well-structured, organized, and maintainable</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 6: Testing Techniques -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Testing Techniques</h1>
+            </div>
+
+            <p>Testing techniques help ensure software quality by targeting different aspects of functionality. Different techniques are appropriate for different testing scenarios and help achieve comprehensive test coverage.</p>
+
+            <div class="technique-grid">
+                <div class="technique-card">
+                    <h3>Equivalence Partitioning</h3>
+                    <p>Groups inputs into categories, testing one example from each.</p>
+                    <p><strong>Example:</strong> Testing age ranges (0-17, 18-65, 65+) to validate behavior within each group.</p>
+                </div>
+                <div class="technique-card">
+                    <h3>Boundary Value Analysis</h3>
+                    <p>Focuses on edge cases at input boundaries.</p>
+                    <p><strong>Example:</strong> Testing minimum and maximum allowed characters for passwords.</p>
+                </div>
+                <div class="technique-card">
+                    <h3>Decision Table Testing</h3>
+                    <p>Uses logical combinations of conditions and actions.</p>
+                    <p><strong>Example:</strong> Verifying user access based on permission combinations.</p>
+                </div>
+                <div class="technique-card">
+                    <h3>State Transition Testing</h3>
+                    <p>Examines how a system moves between states.</p>
+                    <p><strong>Example:</strong> Testing order status transitions from 'pending' to 'shipped' to 'delivered'.</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Application: Shopping Cart Functionality</div>
+                <p><strong>Scenario:</strong> Applying multiple testing techniques to shopping cart features.</p>
+                <p><strong>Technique Application:</strong></p>
+                <ul>
+                    <li><strong>Equivalence Partitioning:</strong> Testing different product categories (electronics, clothing, groceries)</li>
+                    <li><strong>Boundary Value Analysis:</strong> Testing cart limits (minimum 1 item, maximum 99 items)</li>
+                    <li><strong>Decision Table Testing:</strong> Testing discount application based on cart value and coupon codes</li>
+                    <li><strong>State Transition Testing:</strong> Testing cart states (empty, items added, checkout in progress, completed)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 7: Test Execution -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Phase 4: Test Execution</h1>
+            </div>
+
+            <p>In the execution phase, testers execute the test cases on the actual software. They interact with the application and systematically follow the steps specified in the test cases. Testers record the results, document any defects, and report them to the development team for resolution.</p>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Example: Checkout Process Testing</div>
+                <p><strong>Scenario:</strong> Executing test cases for an online checkout process.</p>
+                <p><strong>Execution Activities:</strong></p>
+                <ul>
+                    <li>Run 50 test cases covering different payment methods</li>
+                    <li>Verify tax calculations for different regions</li>
+                    <li>Test shipping options and cost calculations</li>
+                    <li>Validate order confirmation emails</li>
+                    <li>Document 3 critical defects related to payment processing</li>
+                    <li>Capture screenshots and logs for failed test cases</li>
+                </ul>
+                <p><strong>Tools Used:</strong> Selenium for automation, JIRA for defect tracking, BrowserStack for cross-browser testing</p>
+            </div>
+
+            <h3>Test Execution Approaches</h3>
+            <table>
+                <tr>
+                    <th>Approach</th>
+                    <th>Description</th>
+                    <th>When to Use</th>
+                </tr>
+                <tr>
+                    <td>Manual Testing</td>
+                    <td>Testers manually execute test cases without automation</td>
+                    <td>Exploratory testing, usability testing, ad-hoc testing</td>
+                </tr>
+                <tr>
+                    <td>Automated Testing</td>
+                    <td>Using tools to execute pre-scripted tests</td>
+                    <td>Regression testing, performance testing, repetitive tests</td>
+                </tr>
+                <tr>
+                    <td>Hybrid Approach</td>
+                    <td>Combination of manual and automated testing</td>
+                    <td>Most real-world scenarios, balancing coverage and efficiency</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 8: Defect Reporting and Tracking -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Phase 5: Defect Reporting and Tracking</h1>
+            </div>
+
+            <p>Testers identify defects or issues during test execution and report them to the development team. These defects are logged in a defect tracking system, which includes information about the defect's severity, priority, status, and steps to reproduce it. The development team then works to fix the defects, and testers verify the fixes.</p>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Example: Inventory Management System</div>
+                <p><strong>Scenario:</strong> Reporting and tracking defects in an inventory management module.</p>
+                <p><strong>Defect Lifecycle:</strong></p>
+                <ul>
+                    <li><strong>Identification:</strong> Tester finds that stock levels don't update after purchase</li>
+                    <li><strong>Reporting:</strong> Defect logged with steps to reproduce, screenshots, and environment details</li>
+                    <li><strong>Assignment:</strong> Defect assigned to backend development team</li>
+                    <li><strong>Fixing:</strong> Developer identifies database synchronization issue and implements fix</li>
+                    <li><strong>Verification:</strong> Tester verifies fix and confirms stock levels now update correctly</li>
+                    <li><strong>Closure:</strong> Defect marked as resolved and closed</li>
+                </ul>
+            </div>
+
+            <h3>Defect Life Cycle States</h3>
+            <table>
+                <tr>
+                    <th>State</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>New</td>
+                    <td>Initial state when defect is first identified</td>
+                </tr>
+                <tr>
+                    <td>Assigned</td>
+                    <td>Defect assigned to development team for investigation</td>
+                </tr>
+                <tr>
+                    <td>Open</td>
+                    <td>Developer starts working on the defect</td>
+                </tr>
+                <tr>
+                    <td>Fixed</td>
+                    <td>Developer has implemented a fix</td>
+                </tr>
+                <tr>
+                    <td>Pending Retest</td>
+                    <td>Fix ready for verification by testing team</td>
+                </tr>
+                <tr>
+                    <td>Reopened</td>
+                    <td>Defect not fixed properly, returned to development</td>
+                </tr>
+                <tr>
+                    <td>Verified</td>
+                    <td>Tester confirms the fix is working</td>
+                </tr>
+                <tr>
+                    <td>Closed</td>
+                    <td>Defect resolution confirmed and closed</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 9: Test Closure -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Phase 6: Test Closure</h1>
+            </div>
+
+            <p>The final step involves assessing the overall test process and the quality of the software. Test closure activities include evaluating the test results, preparing test summary reports, and obtaining sign-off from stakeholders. Test closure ensures that all testing objectives have been met and that the software is ready for release.</p>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Example: Product Launch Readiness</div>
+                <p><strong>Scenario:</strong> Completing testing for a major software release.</p>
+                <p><strong>Closure Activities:</strong></p>
+                <ul>
+                    <li>Analyze test metrics: 95% test case pass rate, 45 defects found and fixed</li>
+                    <li>Prepare test summary report with executive summary</li>
+                    <li>Document lessons learned and process improvements</li>
+                    <li>Archive test artifacts for future reference</li>
+                    <li>Obtain formal sign-off from product owner</li>
+                    <li>Celebrate successful testing completion with team</li>
+                </ul>
+            </div>
+
+            <h3>Test Closure Activities</h3>
+            <ul>
+                <li>Evaluate completion of test objectives against exit criteria</li>
+                <li>Document test results and metrics</li>
+                <li>Prepare test summary report for stakeholders</li>
+                <li>Document lessons learned and process improvements</li>
+                <li>Archive testware for future reuse</li>
+                <li>Handover documentation to maintenance team</li>
+                <li>Formal sign-off on testing completion</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Testing Environments -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Testing Environments</h1>
+            </div>
+
+            <p>Different testing environments serve specific purposes throughout the STLC. Proper environment management ensures that testing accurately reflects production conditions while maintaining isolation and control.</p>
+
+            <table>
+                <tr>
+                    <th>Environment</th>
+                    <th>Purpose</th>
+                    <th>Characteristics</th>
+                </tr>
+                <tr>
+                    <td>Development Environment</td>
+                    <td>Code writing, modification, and initial tests</td>
+                    <td>Mirrors developer workstations or shared server</td>
+                </tr>
+                <tr>
+                    <td>Testing Environment</td>
+                    <td>Software testing before user release</td>
+                    <td>Mimics production, isolated for testing</td>
+                </tr>
+                <tr>
+                    <td>Staging/Pre-Production</td>
+                    <td>Final validation before going live</td>
+                    <td>Resembles production, used for final checks</td>
+                </tr>
+                <tr>
+                    <td>Production Environment</td>
+                    <td>Live environment for end-users</td>
+                    <td>Actual system users interact with</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <div class="example-title">Real-World Example: Multi-Environment Testing Strategy</div>
+                <p><strong>Scenario:</strong> Testing a financial application across different environments.</p>
+                <p><strong>Environment Usage:</strong></p>
+                <ul>
+                    <li><strong>Development:</strong> Unit testing and initial feature validation</li>
+                    <li><strong>Testing:</strong> Comprehensive functional, integration, and system testing</li>
+                    <li><strong>Staging:</strong> User acceptance testing and performance testing</li>
+                    <li><strong>Production:</strong> Live system with monitoring and occasional smoke testing</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 11: STLC Best Practices -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>STLC Best Practices</h1>
+            </div>
+
+            <div class="best-practices">
+                <h3>Successful STLC Implementation</h3>
+                <ul>
+                    <li><strong>Early Involvement:</strong> Include testing team from requirement gathering phase</li>
+                    <li><strong>Clear Documentation:</strong> Maintain comprehensive and up-to-date test documentation</li>
+                    <li><strong>Risk-Based Testing:</strong> Prioritize testing based on risk assessment</li>
+                    <li><strong>Continuous Improvement:</strong> Regularly review and improve testing processes</li>
+                    <li><strong>Effective Communication:</strong> Maintain clear communication between teams</li>
+                    <li><strong>Automation Strategy:</strong> Implement smart test automation where beneficial</li>
+                    <li><strong>Metrics and Reporting:</strong> Use meaningful metrics to measure testing effectiveness</li>
+                </ul>
+            </div>
+
+            <h3>Common STLC Challenges and Solutions</h3>
+            <table>
+                <tr>
+                    <th>Challenge</th>
+                    <th>Solution</th>
+                </tr>
+                <tr>
+                    <td>Changing Requirements</td>
+                    <td>Maintain requirement traceability, implement agile testing approaches</td>
+                </tr>
+                <tr>
+                    <td>Time Constraints</td>
+                    <td>Risk-based testing prioritization, test automation</td>
+                </tr>
+                <tr>
+                    <td>Environment Issues</td>
+                    <td>Proper environment management, containerization</td>
+                </tr>
+                <tr>
+                    <td>Resource Limitations</td>
+                    <td>Cross-training, effective test planning, outsourcing when appropriate</td>
+                </tr>
+                <tr>
+                    <td>Defect Management</td>
+                    <td>Clear severity/priority guidelines, efficient tracking tools</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 12: Summary -->
+        <div class="slide">
+            <div class="slide-header">
+                <h1>Summary and Key Takeaways</h1>
+            </div>
+
+            <div class="phase-overview">
+                <div class="phase-card">
+                    <h3>Structured Process</h3>
+                    <p>STLC provides a systematic approach to software testing with clearly defined phases</p>
+                </div>
+                <div class="phase-card">
+                    <h3>Early Defect Detection</h3>
+                    <p>Following STLC helps identify issues early in the development cycle</p>
+                </div>
+                <div class="phase-card">
+                    <h3>Quality Assurance</h3>
+                    <p>Ensures software meets requirements and quality standards</p>
+                </div>
+                <div class="phase-card">
+                    <h3>Risk Mitigation</h3>
+                    <p>Reduces project risks through comprehensive testing</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">Professional Testing Approach</div>
+                <p>Implementing STLC with best practices ensures that testing is not just a phase but an integral part of the software development lifecycle, contributing to the delivery of high-quality, reliable software products.</p>
+            </div>
+
+            <h3>Next Steps</h3>
+            <ul>
+                <li>Apply STLC principles to your current projects</li>
+                <li>Customize the process based on project needs and constraints</li>
+                <li>Continuously improve testing processes based on lessons learned</li>
+                <li>Stay updated with emerging testing methodologies and tools</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="navigation-container">
+        <button class="nav-button" id="prevBtn" onclick="prevSlide()" disabled>
+            <span class="nav-arrow">◀</span>
+        </button>
+        <div class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">12</span>
+        </div>
+        <button class="nav-button" id="nextBtn" onclick="nextSlide()">
+            <span class="nav-arrow">▶</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    // Slide management
+    let currentSlide = 0;
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentSlideSpan = document.getElementById('currentSlide');
+    const totalSlidesSpan = document.getElementById('totalSlides');
+
+    // Initialize
+    totalSlidesSpan.textContent = totalSlides;
+    updateNavigation();
+
+    function updateNavigation() {
+        currentSlideSpan.textContent = currentSlide + 1;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === totalSlides - 1;
+
+        // Update slide position
+        slidesContainer.style.transform = `translateX(-${currentSlide * 100}vw)`;
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateNavigation();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateNavigation();
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+            nextSlide();
+        } else if (event.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+
+    // Touch swipe support for mobile devices
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', function(event) {
+        touchStartX = event.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', function(event) {
+        touchEndX = event.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+
+        if (touchEndX < touchStartX - swipeThreshold) {
+            // Swipe left - next slide
+            nextSlide();
+        } else if (touchEndX > touchStartX + swipeThreshold) {
+            // Swipe right - previous slide
+            prevSlide();
+        }
+    }
+</script>
+</body>
+</html>
