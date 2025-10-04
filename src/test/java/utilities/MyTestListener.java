@@ -107,5 +107,4 @@ public class MyTestListener implements ITestListener, IRetryAnalyzer, IAnnotatio
     public static byte[] addFailedScreenshot(){
         return ((TakesScreenshot)Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
-
 }
